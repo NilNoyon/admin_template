@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Purchase History List{% endblock %}
+
+{% block main %}
+<div id="wrapper">
+  {% include "sidebar.html" %}
+  <div id="content-wrapper" class="content-wrapper">
+
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs-->
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#">Purchase History</a>
+          </li>
+          <li class="breadcrumb-item active">List</li>
+        </ol>
+
+        <!-- DataTables Example -->
+        <div class="card mb-3">
+          <div class="card-header" align="right">
+            <button type="button" class="btn btn-primary" style="align-self: right;" data-toggle="modal" data-target="#phistoryModal"><i class="fa fa-fa-plus">Add Purchase History</i></button>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>SI</th>
+                    <th>Invoice</th>
+                    <th>Vendor</th>
+                    <th>Unit Price</th>
+                    <th>Total Unit</th>
+                    <th>Total Purchase Cost</th>
+                    <th>Purchase Date</th>
+                    <th>Fabric</th>
+                    <th>Brand</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in purchase_histories %}
+                    <tr>
+                      <td>{{ forloop.counter }}</td>
+                      <td>{{ i.invoice }}</td>
+                      <td>{{ i.vendor }}</td>
+                      <td>{{ i.unit_price }}</td>
+                      <td>{{ i.total_unit }}</td>
+                      <td>{{ i.total_purchase_cost }}</td>
+                      <td>{{ i.purchasing_date }}</td>
+                      <td>{{ i.stock_fabric.fabric.name }}</td>
+                      <td>{{ i.stock_fabric.brand.name }}</td>
+                      <td>
+                        <a href="#"><button class="btn btn-primary btn-xs"><i class="fa fa-edit"></i></button></a>
+                        <button type="button" class="btn btn-danger" id="deleteOrder" data-id="{{ i.id }}"><i class="fa fa-user-minus"></i></button>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+                
+              </table>
+            </div>
+          </div>
+          <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
+        </div>
+        
+
+      </div>
+      <!-- /.container-fluid -->
+      <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="m-t-md" id="itemForm" action="#" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" id="user_id">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Item Entry Form</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="name">Item Name:</label>
+                                    <input name="name" type="text" class="form-control" id="item_name" placeholder="Enter Item Name...">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="serial_no">Serial No:</label>
+                                    <input name="serial_no" type="text" class="form-control" id="serial_no" placeholder="Enter Serial No">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="type">Type:</label>
+                                    <input name="type" type="text" class="form-control" id="type" placeholder="Enter Type ...">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="status">Status:</label>
+                                    <select class="form-control m-b-sm" id="status" name="status">
+                                          <option value="">Please Select A Type</option>
+                                          <option value="1">Active</option>
+                                          <option value="0">In Active</option>
+                                          <!-- <option></option> -->
+                                      </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="details">Details:</label>
+                                    <textarea class="form-control" id="details" name="details" rows="2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="modal-footer">
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save Information</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+      </div>
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © Tailor XYZ - 2020</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+
+</script>
+{% endblock %}

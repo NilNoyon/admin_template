@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{% block title %}{% endblock %} - Tailor XYZ</title>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <meta name="description" content="Tailor Ordering Management System" />
+        <meta name="author" content="Noyon Islam" />
+        {% include "links.html" %}
+        {% block css %}{% endblock %}
+    </head>
+    <body id="page-top" class="{% block bodyClass %}{% endblock %}">
+        {% include "navbar.html" %}
+        {% block main %} {% endblock %}
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <i class="fas fa-angle-up"></i>
+        </a>
+        <!-- Logout Modal-->
+        <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+              <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+              <a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+            </div>
+          </div>
+        </div>
+        </div>
+        {% include "scripts.html" %}
+        {% block scripts %}{% endblock %}
+        <script>
+            $( document ).ready(function() {
+
+              {% if messages %}
+                {% for message in messages %}
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'fadeIn',
+                        hideMethod: 'fadeOut',
+                        timeOut: 5000
+                    };
+                    toastr.{{ message.tags }}('{{ message }}');
+                {% endfor %}
+              {% endif %}
+
+            });
+        </script>
+    </body>
+</html>
